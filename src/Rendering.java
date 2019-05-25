@@ -1,32 +1,54 @@
+import javax.swing.*;
 import java.awt.*; //Needed for the Frame
 import java.awt.event.*;
+import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
 
-public class Rendering extends Frame{
+public class Rendering extends JPanel {
 
-    public void drawWindow() {
-        //iniate new window with 500x500 pixel
-        setSize(500, 500);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            //Closing window on topping process
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
+    public static final int WIDTH = 640;
+    public static final int HEIGHT = 480;
+
+    private BufferedImage canvas;
+    private static Rendering instance = null;
+
+    public Rendering(int width, int height) {
+        canvas = new BufferedImage(width, height,BufferedImage.TYPE_INT_ARGB);
+        for (int i = 0; i < canvas.getWidth(); i++) {
+            for (int j = 0; j < canvas.getHeight(); j++){
+                canvas.setRGB(i, j, Color.BLACK.getRGB());
             }
-        });
+        }
+        //set canvas width and height same as the buffered image
+        this.setPreferredSize(new Dimension(width, height));
     }
 
-    @Override
-    //what is going to be rendered
-    public void paint(Graphics g) {
-        g.drawString("Render-Fenster", 120, 60);
+    //Draws the image
+    public void paintComponent (Graphics g){
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(canvas, null, null);
+    }
+
+    public static Rendering getRendering(){
+        if (Rendering.instance == null){
+            Rendering.instance = new Rendering(WIDTH, HEIGHT);
+        }
+        return Rendering.instance;
     }
 
     /**
      * this will start the rendering process
      * @param args
      */
-    public static void main(String args[]){
-        new Rendering().setVisible(true);
 
+    public static void main(String args[]){
+        Rendering panel = getRendering();
+        JFrame frame = new JFrame("Raytracer");
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
