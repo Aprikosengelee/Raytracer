@@ -57,6 +57,17 @@ public class Mat3x3 {
         this.m32 = v2.getVZ();
         this.m33 = v3.getVZ();
     }
+    public Mat3x3 (Mat3x3 m){
+        this.m11 = m.m11;
+        this.m12 = m.m12;
+        this.m13 = m.m13;
+        this.m21 = m.m21;
+        this.m22 = m.m22;
+        this.m23 = m.m23;
+        this.m31 = m.m31;
+        this.m32 = m.m32;
+        this.m33 = m.m33;
+    }
 
     /**
      * addition of 2 3x3 matrix
@@ -64,11 +75,10 @@ public class Mat3x3 {
      * @return new matrix from addition
      */
     public Mat3x3 add(Mat3x3 m){
-        Mat3x3 matNew = new Mat3x3(
+        return new Mat3x3(
                 this.m11 + m.m11, this.m12 + m.m12, this.m13 + m.m13,
                 this.m21 + m.m21, this.m22 + m.m22, this.m23 + m.m23,
                 this.m31 + m.m31, this.m32 + m.m32, this.m33 + m.m33);
-        return matNew;
     }
 
     /**
@@ -77,12 +87,11 @@ public class Mat3x3 {
      * @return new 3x3 matrix from multiplication
      */
     public Mat3x3 mMul(Mat3x3 m){
-        Mat3x3 matNew = new Mat3x3(
+        return new Mat3x3(
                 (this.m11 * m.m11) + (this.m12 * m.m21) + (this.m13 * m.m31), (this.m11 * m.m12) + (this.m12 * m.m22) + (this.m13 * m.m32), (this.m11 * m.m13) + (this.m12 * m.m23) + (this.m13 * m.m33),
                 (this.m21 * m.m11) + (this.m22 * m.m21) + (this.m23 * m.m31), (this.m21 * m.m12) + (this.m22 * m.m22) + (this.m23 * m.m32), (this.m21 * m.m13) + (this.m22 * m.m23) + (this.m13 * m.m33),
                 (this.m31 * m.m11) + (this.m32 * m.m21) + (this.m33 * m.m31), (this.m31 * m.m12) + (this.m32 * m.m22) + (this.m33 * m.m32), (this.m31 * m.m13) + (this.m32 * m.m23) + (this.m33 * m.m33)
         );
-        return matNew;
     }
 
     /**
@@ -91,12 +100,11 @@ public class Mat3x3 {
      * @return new vector from multiplication
      */
     public Vector3 vMul (Vector3 v){
-        Vector3 vNew = new Vector3(
+        return new Vector3(
                 (this.m11 * v.getVX()) + (this.m12 * v.getVY()) + (this.m13 * v.getVZ()),
                 (this.m21 * v.getVX()) + (this.m22 * v.getVY()) + (this.m23 * v.getVZ()),
                 (this.m31 * v.getVX()) + (this.m32 * v.getVY()) + (this.m33 * v.getVZ())
         );
-        return vNew;
     }
 
     /**
@@ -104,8 +112,12 @@ public class Mat3x3 {
      * @return determinant
      */
     public double det (){
-        double determinant = (this.m11 * this.m22 * this.m33) + (this.m12 * this.m23 * this.m31) + (this.m13 * this.m21 * this.m32) - (this.m31 * this.m22 * this.m13) - (this.m32 * this.m23 * this.m11) - (this.m33 * this.m21 * this.m12);
-        return determinant;
+        return  (this.m11 * this.m22 * this.m33) +
+                (this.m12 * this.m23 * this.m31) +
+                (this.m13 * this.m21 * this.m32) -
+                (this.m31 * this.m22 * this.m13) -
+                (this.m32 * this.m23 * this.m11) -
+                (this.m33 * this.m21 * this.m12);
     }
     public double getM11() {
         return m11;

@@ -38,10 +38,24 @@ public class Rendering extends JPanel {
     }
 
     /**
+     * The actual drawing method, to get the picture pixel pixel
+     * @param x - position x of the pixel in our frame
+     * @param y - position y of the pixel in our frame
+     * @param rgb - which color it will be
+     */
+    public static void setPixel(int x, int y, int rgb){
+        Rendering inst = getRendering();
+        if ((x < WIDTH -1) || (y < HEIGHT - 1) || (x < 0) || (y < 0)){
+            return;
+        }
+        inst.canvas.setRGB(x, y, rgb);
+        inst.repaint();
+    }
+
+    /**
      * this will start the rendering process
      * @param args
      */
-
     public static void main(String args[]){
         Rendering panel = getRendering();
         JFrame frame = new JFrame("Raytracer");
